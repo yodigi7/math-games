@@ -9,7 +9,7 @@ export class GenericProblemService {
 
   constructor(private randomNumberGenerator: GenerateRandomNumberService) { }
 
-  simplifyDefaults(nullableNumbers: Array<number>, defaultNumbers: Array<number>) {
+  simplifyDefaults(defaultNumbers: Array<number>, nullableNumbers: Array<number>) {
     let returnList = [];
     for(let i = 0; i < nullableNumbers.length; i++) {
       let item = nullableNumbers[i];
@@ -27,6 +27,11 @@ export class GenericProblemService {
     [firstLowerBound, firstUpperBound, secondLowerBound, secondUpperBound] = this.simplifyDefaults(
       [firstLowerBound, firstUpperBound, secondLowerBound, secondUpperBound],
       [defaultFirstLowerBound, defaultFirstUpperBound, defaultSecondLowerBound, defaultSecondUpperBound])
+    console.log(this.simplifyDefaults(
+      [firstLowerBound, firstUpperBound, secondLowerBound, secondUpperBound],
+      [defaultFirstLowerBound, defaultFirstUpperBound, defaultSecondLowerBound, defaultSecondUpperBound])
+    );
+    
     return {
       first: this.randomNumberGenerator.getRandomNumber(firstLowerBound, firstUpperBound),
       second: this.randomNumberGenerator.getRandomNumber(secondLowerBound, secondUpperBound)

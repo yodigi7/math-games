@@ -11,10 +11,10 @@ export class AddService implements SimpleProblem {
 
   private desiredAnswer: number;
   private readonly defaults = [
-    0, // First lower bound
+    0,  // First lower bound
     10, // First upper bound
-    0, // Second lower bound
-    10 // Second upper bound
+    0,  // Second lower bound
+    10  // Second upper bound
   ]
 
   constructor(private randomNumberGenerator: GenerateRandomNumberService,
@@ -32,6 +32,8 @@ export class AddService implements SimpleProblem {
       [this.defaults[0], this.defaults[1], this.defaults[2], this.defaults[3]], 
       [firstUpperBound, firstLowerBound, secondUpperBound, secondLowerBound]);
     this.desiredAnswer = returnObject.first + returnObject.second;
+    console.log(returnObject);
+    console.log([this.defaults[0], this.defaults[1], this.defaults[2], this.defaults[3]]);
     return returnObject;
   }
 }
