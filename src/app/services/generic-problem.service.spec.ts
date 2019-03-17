@@ -4,8 +4,7 @@ import { GenericProblemService } from './generic-problem.service';
 import { GenerateRandomNumberService } from './generate-random-number.service';
 
 describe('GenericProblemService', () => {
-  let randomNumberGenerator = new GenerateRandomNumberService();
-  let genericProblemService = new GenericProblemService(randomNumberGenerator);
+  let genericProblemService = new GenericProblemService();
 
   beforeEach(() => TestBed.configureTestingModule({}));
 
@@ -36,6 +35,17 @@ describe('GenericProblemService', () => {
 
   it('#simplifyDefaults should only replace the ones that are null', () => {
     let inputs = [1, null, null, 1];
+    let defaults = [10, 10, 10, 10];
+    let returnValue = genericProblemService.simplifyDefaults(defaults, inputs);
+    expect(returnValue[0]).toEqual(1);
+    expect(returnValue[1]).toEqual(10);
+    expect(returnValue[2]).toEqual(10);
+    expect(returnValue[3]).toEqual(1);
+  })
+
+  it('#simplifyDefaults should replace undefined as well', () => {
+    let num: number;
+    let inputs = [1, num, num, 1];
     let defaults = [10, 10, 10, 10];
     let returnValue = genericProblemService.simplifyDefaults(defaults, inputs);
     expect(returnValue[0]).toEqual(1);

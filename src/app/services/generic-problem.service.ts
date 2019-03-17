@@ -7,34 +7,18 @@ import { DoubleOperand } from '../interfaces/double-operand';
 })
 export class GenericProblemService {
 
-  constructor(private randomNumberGenerator: GenerateRandomNumberService) { }
+  constructor() { }
 
   simplifyDefaults(defaultNumbers: Array<number>, nullableNumbers: Array<number>) {
     let returnList = [];
     for(let i = 0; i < nullableNumbers.length; i++) {
       let item = nullableNumbers[i];
-      if (item === null) {
+      if (item === null || item === undefined) {
         returnList.push(defaultNumbers[i]);
       } else {
         returnList.push(nullableNumbers[i]);
       }
     }
     return returnList;
-  }
-
-  generateTwoOperands([defaultFirstLowerBound, defaultFirstUpperBound, defaultSecondLowerBound, defaultSecondUpperBound],
-                      [firstUpperBound, firstLowerBound, secondUpperBound, secondLowerBound]): DoubleOperand {
-    [firstLowerBound, firstUpperBound, secondLowerBound, secondUpperBound] = this.simplifyDefaults(
-      [firstLowerBound, firstUpperBound, secondLowerBound, secondUpperBound],
-      [defaultFirstLowerBound, defaultFirstUpperBound, defaultSecondLowerBound, defaultSecondUpperBound])
-    console.log(this.simplifyDefaults(
-      [firstLowerBound, firstUpperBound, secondLowerBound, secondUpperBound],
-      [defaultFirstLowerBound, defaultFirstUpperBound, defaultSecondLowerBound, defaultSecondUpperBound])
-    );
-    
-    return {
-      first: this.randomNumberGenerator.getRandomNumber(firstLowerBound, firstUpperBound),
-      second: this.randomNumberGenerator.getRandomNumber(secondLowerBound, secondUpperBound)
-    }
   }
 }

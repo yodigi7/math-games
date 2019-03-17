@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { AddService } from '../problems/add.service';
 import { CountdownService } from '../services/countdown.service';
 import { timer } from 'rxjs';
@@ -8,19 +8,28 @@ import { timer } from 'rxjs';
   templateUrl: './simple-problem.component.html',
   styleUrls: ['./simple-problem.component.scss']
 })
-export class SimpleProblemComponent implements OnInit {
+export class SimpleProblemComponent implements OnInit, OnDestroy {
+  score = 0;
   timeLeft: number;
   firstOperand: number;
   secondOperand: number;
   userAnswer: number;
   operator = '+';
   isCorrect = false;
+  timeout;
 
   constructor(private addService: AddService, private timer: CountdownService) { }
 
   ngOnInit() {
     this.setNewProblem();
     this.setTimer();
+  }
+
+  ngOnDestroy() {
+    if (!this.timeout === undefined) {
+      clearTimeout(this.timeout);
+    }
+    this.timer.cancel();
   }
 
   setTimer() {
@@ -31,17 +40,33 @@ export class SimpleProblemComponent implements OnInit {
     this.timer.countDown();
   }
 
+  outOfTime() {
+    this.timeLeft--;
+    // TODO: Show results and ask to go again
+  }
+
   setNewProblem () {
-    console.log("creating new problem")
     let problem = this.addService.generate();
     this.firstOperand = problem.first;
     this.secondOperand = problem.second;
   }
 
   submitAnswer() {
-    console.log(this.userAnswer);
     this.isCorrect = this.addService.check(this.userAnswer);
-    this.setNewProblem();
+    if (this.isCorrect) {
+      this.submittedCorrectAnswer();
+    } else {
+      this.submittedIncorrectAnswer();
+    }
     this.userAnswer = null;
+  }
+
+  submittedCorrectAnswer() {
+    this.setNewProblem();
+    this.score++;
+  }
+
+  submittedIncorrectAnswer() {
+    this.setNewProblem();
   }
 }
