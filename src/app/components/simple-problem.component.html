@@ -1,7 +1,13 @@
 <div>
+    Countdown: {{ timeLeft }}<br>
     Problem:<br>
-    {{ firstOperand }} + {{ secondOperand }}<br>
-    <input type="number" [(ngModel)]="userAnswer"><br>
-    <button (click)="submitAnswer()">Submit</button><br>
+    <form (ngSubmit)="submitAnswer()">
+        <label id="problem">{{ firstOperand}} {{ operator }} {{ secondOperand }}</label>
+        <mat-form-field>
+            <input matInput [(ngModel)]="userAnswer" class="form-control" name="problem" type="number" placeholder="answer here">
+        </mat-form-field>
+        <button type="submit" mat-raised-button>Submit</button>
+        <button mat-raised-button type="submit">Skip</button>
+    </form>
     {{ isCorrect }}
 </div>

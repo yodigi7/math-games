@@ -8,6 +8,7 @@ export class CountdownService {
   private _startTime: number;
   public currentTime: number;
   public callbackFunc: Function;
+  public tickFunc: Function;
   private tickInterval;
 
   constructor() { }
@@ -26,6 +27,7 @@ export class CountdownService {
   }
 
   tick() {
+    this.tickFunc();
     if(--this.currentTime === 0) {
       this.cancel();
       this.callbackFunc();
